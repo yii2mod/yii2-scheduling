@@ -243,7 +243,7 @@ Using addition functions
 
 If you want to use `thenPing` method of the Event, you should add the following string to the `composer.json` of your app:
 ```
-"guzzlehttp/guzzle": "~5.0"
+"guzzlehttp/guzzle": "~5.3|~6.0"
 ```
 
 Note about timezones
