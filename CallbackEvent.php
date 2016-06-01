@@ -1,13 +1,14 @@
 <?php
 
-namespace omnilight\scheduling;
+namespace yii2mod\scheduling;
+
 use yii\base\Application;
 use yii\base\InvalidParamException;
 use yii\base\Object;
 
-
 /**
  * Class CallbackEvent
+ * @package yii2mod\scheduling
  */
 class CallbackEvent extends Event
 {
@@ -17,6 +18,7 @@ class CallbackEvent extends Event
      * @var string
      */
     protected $callback;
+
     /**
      * The parameters to pass to the method.
      *
@@ -56,6 +58,7 @@ class CallbackEvent extends Event
         parent::callAfterCallbacks($app);
         return $response;
     }
+
     /**
      * Get the summary of the event for display.
      *
@@ -66,5 +69,4 @@ class CallbackEvent extends Event
         if (is_string($this->_description)) return $this->_description;
         return is_string($this->callback) ? $this->callback : 'Closure';
     }
-
 }
