@@ -612,13 +612,25 @@ class Event extends Component
     }
 
     /**
+     * Get the Cron description for the event.
+     * 
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->_description;
+    }
+
+    /**
      * Get the summary of the event for display.
      *
      * @return string
      */
     public function getSummaryForDisplay()
     {
-        if (is_string($this->_description)) return $this->_description;
+        if (is_string($this->_description)) {
+            return $this->_description;
+        }
         return $this->buildCommand();
     }
 
