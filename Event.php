@@ -124,7 +124,7 @@ class Event extends Component
     }
 
     /**
-     * Build the comand string.
+     * Build the command string.
      *
      * @return string
      */
