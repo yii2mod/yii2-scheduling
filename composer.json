@@ -1,5 +1,5 @@
 {
-  "name": "omnilight/yii2-scheduling",
+  "name": "yii2mod/yii2-scheduling",
   "description": "Scheduling extension for Yii2 framework",
   "keywords": [
     "yii",
@@ -11,6 +11,10 @@
     {
       "name": "Pavel Agalecky",
       "email": "pavel.agalecky@gmail.com"
+    },
+    {
+      "name": "Igor Chepurnoy",
+      "email": "igorzfort@gmail.com"
     }
   ],
   "type": "yii2-extension",
@@ -25,10 +29,10 @@
   },
   "autoload": {
     "psr-4": {
-      "omnilight\\scheduling\\": ""
+      "yii2mod\\scheduling\\": ""
     }
   },
   "extra": {
-    "bootstrap": "omnilight\\scheduling\\Bootstrap"
+    "bootstrap": "yii2mod\\scheduling\\Bootstrap"
   }
 }
