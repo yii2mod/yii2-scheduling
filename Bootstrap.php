@@ -20,7 +20,7 @@ class Bootstrap implements BootstrapInterface
     {
         if ($app instanceof \yii\console\Application) {
             if (!isset($app->controllerMap['schedule'])) {
-                $app->controllerMap['schedule'] = 'omnilight\scheduling\ScheduleController';
+                $app->controllerMap['schedule'] = 'yii2mod\scheduling\ScheduleController';
             }
         }
     }
