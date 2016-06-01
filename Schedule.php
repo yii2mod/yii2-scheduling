@@ -1,9 +1,9 @@
 <?php
 
-namespace omnilight\scheduling;
+namespace yii2mod\scheduling;
+
 use yii\base\Component;
 use yii\base\Application;
-
 
 /**
  * Class Schedule
@@ -20,30 +20,31 @@ class Schedule extends Component
     /**
      * Add a new callback event to the schedule.
      *
-     * @param  string  $callback
-     * @param  array   $parameters
+     * @param  string $callback
+     * @param  array $parameters
      * @return Event
      */
-    public function call($callback, array $parameters = array())
+    public function call($callback, array $parameters = [])
     {
         $this->_events[] = $event = new CallbackEvent($callback, $parameters);
         return $event;
     }
+
     /**
      * Add a new cli command event to the schedule.
      *
-     * @param  string  $command
+     * @param  string $command
      * @return Event
      */
     public function command($command)
     {
-        return $this->exec(PHP_BINARY.' yii '.$command);
+        return $this->exec(PHP_BINARY . ' yii ' . $command);
     }
 
     /**
      * Add a new command event to the schedule.
      *
-     * @param  string  $command
+     * @param  string $command
      * @return Event
      */
     public function exec($command)
@@ -52,6 +53,10 @@ class Schedule extends Component
         return $event;
     }
 
+    /**
+     * Get events
+     * @return Event[]
+     */
     public function getEvents()
     {
         return $this->_events;
@@ -65,8 +70,7 @@ class Schedule extends Component
      */
     public function dueEvents(Application $app)
     {
-        return array_filter($this->_events, function(Event $event) use ($app)
-        {
+        return array_filter($this->_events, function (Event $event) use ($app) {
             return $event->isDue($app);
         });
     }
