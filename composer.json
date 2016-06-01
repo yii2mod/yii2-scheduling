@@ -22,7 +22,8 @@
     "php": ">=5.4.0",
     "yiisoft/yii2": "2.0.*",
     "symfony/process": "2.6.*",
-    "mtdowling/cron-expression": "~1.0"
+    "mtdowling/cron-expression": "~1.0",
+    "league/climate": "^3.2"
   },
   "suggest": {
     "guzzlehttp/guzzle": "Required to use the thenPing method on schedules (~5.0)."
