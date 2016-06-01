@@ -1,6 +1,6 @@
 <?php
 
-namespace omnilight\scheduling;
+namespace yii2mod\scheduling;
 
 use Cron\CronExpression;
 use GuzzleHttp\Client as HttpClient;
@@ -13,6 +13,7 @@ use yii\mail\MailerInterface;
 
 /**
  * Class Event
+ * @package yii2mod\scheduling
  */
 class Event extends Component
 {
@@ -24,48 +25,56 @@ class Event extends Component
      * @var string
      */
     public $command;
+
     /**
      * The cron expression representing the event's frequency.
      *
      * @var string
      */
     protected $_expression = '* * * * * *';
+
     /**
      * The timezone the date should be evaluated on.
      *
      * @var \DateTimeZone|string
      */
     protected $_timezone;
+
     /**
      * The user the command should run as.
      *
      * @var string
      */
     protected $_user;
+
     /**
      * The filter callback.
      *
      * @var \Closure
      */
     protected $_filter;
+
     /**
      * The reject callback.
      *
      * @var \Closure
      */
     protected $_reject;
+
     /**
      * The location that output should be sent to.
      *
      * @var string
      */
     protected $_output = null;
+
     /**
      * The array of callbacks to be run after the event is finished.
      *
      * @var array
      */
     protected $_afterCallbacks = [];
+
     /**
      * The human readable description of the event.
      *
@@ -181,11 +190,14 @@ class Event extends Component
      */
     protected function filtersPass(Application $app)
     {
-        if (($this->_filter && ($this->_filter)) ||
-            $this->_reject && call_user_func($this->_reject, $app)
-        ) {
+        if (is_callable($this->_filter) && call_user_func($this->_filter, $app) === false) {
             return false;
         }
+
+        if (is_callable($this->_reject) && call_user_func($this->_reject, $app)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -202,7 +214,7 @@ class Event extends Component
     /**
      * The Cron expression representing the event's frequency.
      *
-     * @param  string $expression
+     * @param string $expression
      * @return $this
      */
     public function cron($expression)
@@ -224,7 +236,7 @@ class Event extends Component
     /**
      * Schedule the command at a given time.
      *
-     * @param  string $time
+     * @param string $time
      * @return $this
      */
     public function at($time)
@@ -235,7 +247,7 @@ class Event extends Component
     /**
      * Schedule the event to run daily at a given time (10:00, 19:30, etc).
      *
-     * @param  string $time
+     * @param string $time
      * @return $this
      */
     public function dailyAt($time)
@@ -248,8 +260,8 @@ class Event extends Component
     /**
      * Splice the given value into the given position of the expression.
      *
-     * @param  int $position
-     * @param  string $value
+     * @param int $position
+     * @param string $value
      * @return Event
      */
     protected function spliceIntoPosition($position, $value)
@@ -292,7 +304,7 @@ class Event extends Component
     /**
      * Set the days of the week the command should run on.
      *
-     * @param  array|int $days
+     * @param array|int $days
      * @return $this
      */
     public function days($days)
@@ -374,8 +386,8 @@ class Event extends Component
     /**
      * Schedule the event to run weekly on a given day and time.
      *
-     * @param  int $day
-     * @param  string $time
+     * @param int $day
+     * @param string $time
      * @return $this
      */
     public function weeklyOn($day, $time = '0:0')
@@ -422,7 +434,7 @@ class Event extends Component
      */
     public function everyNMinutes($minutes)
     {
-        return $this->cron('*/'.$minutes.' * * * * *');
+        return $this->cron('*/' . $minutes . ' * * * * *');
     }
 
     /**
@@ -458,7 +470,7 @@ class Event extends Component
     /**
      * Set the timezone the date should be evaluated on.
      *
-     * @param  \DateTimeZone|string $timezone
+     * @param \DateTimeZone|string $timezone
      * @return $this
      */
     public function timezone($timezone)
@@ -470,7 +482,7 @@ class Event extends Component
     /**
      * Set which user the command should run as.
      *
-     * @param  string $user
+     * @param string $user
      * @return $this
      */
     public function user($user)
@@ -482,7 +494,7 @@ class Event extends Component
     /**
      * Register a callback to further filter the schedule.
      *
-     * @param  \Closure $callback
+     * @param \Closure $callback
      * @return $this
      */
     public function when(\Closure $callback)
@@ -494,7 +506,7 @@ class Event extends Component
     /**
      * Register a callback to further filter the schedule.
      *
-     * @param  \Closure $callback
+     * @param \Closure $callback
      * @return $this
      */
     public function skip(\Closure $callback)
@@ -506,7 +518,7 @@ class Event extends Component
     /**
      * Send the output of the command to a given location.
      *
-     * @param  string $location
+     * @param string $location
      * @return $this
      */
     public function sendOutputTo($location)
@@ -518,7 +530,7 @@ class Event extends Component
     /**
      * E-mail the results of the scheduled operation.
      *
-     * @param  array $addresses
+     * @param array $addresses
      * @return $this
      *
      * @throws \LogicException
@@ -537,7 +549,7 @@ class Event extends Component
     /**
      * Register a callback to be called after the operation.
      *
-     * @param  \Closure $callback
+     * @param \Closure $callback
      * @return $this
      */
     public function then(\Closure $callback)
@@ -550,7 +562,7 @@ class Event extends Component
      * E-mail the output of the event to the recipients.
      *
      * @param MailerInterface $mailer
-     * @param  array $addresses
+     * @param array $addresses
      */
     protected function emailOutput(MailerInterface $mailer, $addresses)
     {
@@ -577,7 +589,7 @@ class Event extends Component
     /**
      * Register a callback to the ping a given URL after the job runs.
      *
-     * @param  string $url
+     * @param string $url
      * @return $this
      */
     public function thenPing($url)
@@ -590,7 +602,7 @@ class Event extends Component
     /**
      * Set the human-friendly description of the event.
      *
-     * @param  string $description
+     * @param string $description
      * @return $this
      */
     public function description($description)
@@ -620,6 +632,10 @@ class Event extends Component
         return $this->_expression;
     }
 
+    /**
+     * Get default output
+     * @return string
+     */
     public function getDefaultOutput()
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
