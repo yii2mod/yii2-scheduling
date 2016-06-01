@@ -161,6 +161,18 @@ $schedule->command('foo')->monthly()->description('command description');
 $schedule->command('foo')->sendOutputTo($filePath)->emailOutputTo('foo@example.com');
 ```
 
+**To see the list of registered tasks, you can use the `schedule/list` command as below:**
+
+```bash
+php yii schedule/list
+
++---+-------------------------------------+-------------+-----------------------------------------------------+
+| # | Task                                | Expression  | Command to Run                                      |
++---+-------------------------------------+-------------+-----------------------------------------------------+
+| 1 | Delete the logs older than week     | 0 0 * * 0 * | /usr/bin/php5 yii app/delete-logs-older-then-week   |
++---+-------------------------------------+-------------+-----------------------------------------------------+
+```
+
 How to use this extension in your application?
 ----------------------------------------------
 
