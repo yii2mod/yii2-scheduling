@@ -2,7 +2,9 @@
 
 namespace yii2mod\scheduling;
 
+use League\CLImate\CLImate;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\console\Controller;
 use yii\di\Instance;
 
@@ -20,7 +22,7 @@ class ScheduleController extends Controller
     /**
      * @var string Schedule file that will be used to run schedule
      */
-    public $scheduleFile;
+    public $scheduleFile = '@app/config/schedule.php';
 
     /**
      * Returns the names of valid options for the action (id)
@@ -36,7 +38,6 @@ class ScheduleController extends Controller
 
     /**
      * Initializes the object.
-     * @throws \yii\base\InvalidConfigException
      */
     public function init()
     {
@@ -50,7 +51,6 @@ class ScheduleController extends Controller
 
     /**
      * Run scheduled commands
-     * @return void
      */
     public function actionRun()
     {
@@ -69,19 +69,38 @@ class ScheduleController extends Controller
     }
 
     /**
+     * Render list of registered tasks
+     */
+    public function actionList()
+    {
+        $this->importScheduleFile();
+
+        $climate = new CLImate();
+        $data = [];
+        $row = 0;
+
+        foreach ($this->schedule->getEvents() as $event) {
+            $data[] = [
+                '#' => ++$row,
+                'Task' => $event->getDescription(),
+                'Expression' => $event->getExpression(),
+                'Command to Run' => $event->command,
+            ];
+        }
+
+        $climate->table($data);
+    }
+
+    /**
      * Import schedule file
-     * @return void
+     * @throws InvalidConfigException
      */
     protected function importScheduleFile()
     {
-        if ($this->scheduleFile === null) {
-            return;
-        }
-
         $scheduleFile = Yii::getAlias($this->scheduleFile);
-        if (file_exists($scheduleFile) == false) {
-            $this->stderr('Can not load schedule file ' . $this->scheduleFile . "\n");
-            return;
+
+        if (!file_exists($scheduleFile)) {
+            throw new InvalidConfigException("Can not load schedule file {$this->scheduleFile}");
         }
 
         $schedule = $this->schedule;
