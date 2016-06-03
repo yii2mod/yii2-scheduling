@@ -3,6 +3,8 @@ Schedule extension for Yii2
 
 This extension is the port of Laravel's Schedule component (http://laravel.com/docs/master/artisan#scheduling-artisan-commands)
 
+[![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-scheduling/v/stable)](https://packagist.org/packages/yii2mod/yii2-scheduling)  [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-scheduling/downloads)](https://packagist.org/packages/yii2mod/yii2-scheduling)
+
 Installation
 ------------
 
