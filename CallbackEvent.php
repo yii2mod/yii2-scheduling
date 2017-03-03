@@ -8,6 +8,7 @@ use yii\base\Object;
 
 /**
  * Class CallbackEvent
+ *
  * @package yii2mod\scheduling
  */
 class CallbackEvent extends Event
@@ -38,10 +39,9 @@ class CallbackEvent extends Event
 
         Object::__construct($config);
 
-        if ( ! is_string($this->callback) && ! is_callable($this->callback))
-        {
+        if (!is_string($this->callback) && !is_callable($this->callback)) {
             throw new InvalidParamException(
-                "Invalid scheduled callback event. Must be string or callable."
+                'Invalid scheduled callback event. Must be string or callable.'
             );
         }
     }
@@ -50,12 +50,14 @@ class CallbackEvent extends Event
      * Run the given event.
      *
      * @param Application $app
+     *
      * @return mixed
      */
     public function run(Application $app)
     {
         $response = call_user_func_array($this->callback, array_merge($this->parameters, [$app]));
         parent::callAfterCallbacks($app);
+
         return $response;
     }
 
@@ -66,7 +68,10 @@ class CallbackEvent extends Event
      */
     public function getSummaryForDisplay()
     {
-        if (is_string($this->_description)) return $this->_description;
+        if (is_string($this->_description)) {
+            return $this->_description;
+        }
+
         return is_string($this->callback) ? $this->callback : 'Closure';
     }
 }

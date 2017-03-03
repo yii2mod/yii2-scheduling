@@ -3,22 +3,21 @@
 namespace yii2mod\scheduling;
 
 use yii\base\BootstrapInterface;
-use yii\base\Application;
-
+use yii\console\Application;
 
 /**
  * Class Bootstrap
+ *
  * @package yii2mod\scheduling
  */
 class Bootstrap implements BootstrapInterface
 {
     /**
-     * Bootstrap method to be called during application bootstrap stage.
-     * @param Application $app the application currently running
+     * @inheritdoc
      */
     public function bootstrap($app)
     {
-        if ($app instanceof \yii\console\Application) {
+        if ($app instanceof Application) {
             if (!isset($app->controllerMap['schedule'])) {
                 $app->controllerMap['schedule'] = 'yii2mod\scheduling\ScheduleController';
             }

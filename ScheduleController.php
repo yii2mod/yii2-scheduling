@@ -10,6 +10,7 @@ use yii\di\Instance;
 
 /**
  * Class ScheduleController
+ *
  * @package yii2mod\scheduling
  */
 class ScheduleController extends Controller
@@ -26,7 +27,9 @@ class ScheduleController extends Controller
 
     /**
      * Returns the names of valid options for the action (id)
+     *
      * @param string $actionID
+     *
      * @return array
      */
     public function options($actionID)
@@ -93,6 +96,7 @@ class ScheduleController extends Controller
 
     /**
      * Import schedule file
+     *
      * @throws InvalidConfigException
      */
     protected function importScheduleFile()

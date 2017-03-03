@@ -2,8 +2,8 @@
 
 namespace yii2mod\scheduling;
 
-use yii\base\Component;
 use yii\base\Application;
+use yii\base\Component;
 
 /**
  * Class Schedule
@@ -22,11 +22,13 @@ class Schedule extends Component
      *
      * @param  string $callback
      * @param  array $parameters
+     *
      * @return Event
      */
     public function call($callback, array $parameters = [])
     {
         $this->_events[] = $event = new CallbackEvent($callback, $parameters);
+
         return $event;
     }
 
@@ -34,6 +36,7 @@ class Schedule extends Component
      * Add a new cli command event to the schedule.
      *
      * @param  string $command
+     *
      * @return Event
      */
     public function command($command)
@@ -45,16 +48,19 @@ class Schedule extends Component
      * Add a new command event to the schedule.
      *
      * @param  string $command
+     *
      * @return Event
      */
     public function exec($command)
     {
         $this->_events[] = $event = new Event($command);
+
         return $event;
     }
 
     /**
      * Get events
+     *
      * @return Event[]
      */
     public function getEvents()
@@ -66,6 +72,7 @@ class Schedule extends Component
      * Get all of the events on the schedule that are due.
      *
      * @param \yii\base\Application $app
+     *
      * @return Event[]
      */
     public function dueEvents(Application $app)

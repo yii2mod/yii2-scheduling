@@ -10,9 +10,9 @@ use yii\base\Component;
 use yii\base\InvalidCallException;
 use yii\mail\MailerInterface;
 
-
 /**
  * Class Event
+ *
  * @package yii2mod\scheduling
  */
 class Event extends Component
@@ -22,6 +22,7 @@ class Event extends Component
 
     /**
      * Command string
+     *
      * @var string
      */
     public $command;
@@ -97,6 +98,7 @@ class Event extends Component
 
     /**
      * Run the given event.
+     *
      * @param Application $app
      */
     public function run(Application $app)
@@ -131,6 +133,7 @@ class Event extends Component
     public function buildCommand()
     {
         $command = $this->command . ' > ' . $this->_output . ' 2>&1 &';
+
         return $this->_user ? 'sudo -u ' . $this->_user . ' ' . $command : $command;
     }
 
@@ -161,6 +164,7 @@ class Event extends Component
      * Determine if the given event should run based on the Cron expression.
      *
      * @param Application $app
+     *
      * @return bool
      */
     public function isDue(Application $app)
@@ -179,6 +183,7 @@ class Event extends Component
         if ($this->_timezone) {
             $date->setTimezone($this->_timezone);
         }
+
         return CronExpression::factory($this->_expression)->isDue($date);
     }
 
@@ -186,6 +191,7 @@ class Event extends Component
      * Determine if the filters pass for the event.
      *
      * @param Application $app
+     *
      * @return bool
      */
     protected function filtersPass(Application $app)
@@ -215,11 +221,13 @@ class Event extends Component
      * The Cron expression representing the event's frequency.
      *
      * @param string $expression
+     *
      * @return $this
      */
     public function cron($expression)
     {
         $this->_expression = $expression;
+
         return $this;
     }
 
@@ -237,6 +245,7 @@ class Event extends Component
      * Schedule the command at a given time.
      *
      * @param string $time
+     *
      * @return $this
      */
     public function at($time)
@@ -248,11 +257,13 @@ class Event extends Component
      * Schedule the event to run daily at a given time (10:00, 19:30, etc).
      *
      * @param string $time
+     *
      * @return $this
      */
     public function dailyAt($time)
     {
         $segments = explode(':', $time);
+
         return $this->spliceIntoPosition(2, (int)$segments[0])
             ->spliceIntoPosition(1, count($segments) == 2 ? (int)$segments[1] : '0');
     }
@@ -262,12 +273,14 @@ class Event extends Component
      *
      * @param int $position
      * @param string $value
+     *
      * @return Event
      */
     protected function spliceIntoPosition($position, $value)
     {
         $segments = explode(' ', $this->_expression);
         $segments[$position - 1] = $value;
+
         return $this->cron(implode(' ', $segments));
     }
 
@@ -305,11 +318,13 @@ class Event extends Component
      * Set the days of the week the command should run on.
      *
      * @param array|int $days
+     *
      * @return $this
      */
     public function days($days)
     {
         $days = is_array($days) ? $days : func_get_args();
+
         return $this->spliceIntoPosition(5, implode(',', $days));
     }
 
@@ -388,11 +403,13 @@ class Event extends Component
      *
      * @param int $day
      * @param string $time
+     *
      * @return $this
      */
     public function weeklyOn($day, $time = '0:0')
     {
         $this->dailyAt($time);
+
         return $this->spliceIntoPosition(5, $day);
     }
 
@@ -430,6 +447,7 @@ class Event extends Component
      * Schedule the event to run every N minutes.
      *
      * @param int|string $minutes
+     *
      * @return $this
      */
     public function everyNMinutes($minutes)
@@ -471,11 +489,13 @@ class Event extends Component
      * Set the timezone the date should be evaluated on.
      *
      * @param \DateTimeZone|string $timezone
+     *
      * @return $this
      */
     public function timezone($timezone)
     {
         $this->_timezone = $timezone;
+
         return $this;
     }
 
@@ -483,11 +503,13 @@ class Event extends Component
      * Set which user the command should run as.
      *
      * @param string $user
+     *
      * @return $this
      */
     public function user($user)
     {
         $this->_user = $user;
+
         return $this;
     }
 
@@ -495,11 +517,13 @@ class Event extends Component
      * Register a callback to further filter the schedule.
      *
      * @param \Closure $callback
+     *
      * @return $this
      */
     public function when(\Closure $callback)
     {
         $this->_filter = $callback;
+
         return $this;
     }
 
@@ -507,11 +531,13 @@ class Event extends Component
      * Register a callback to further filter the schedule.
      *
      * @param \Closure $callback
+     *
      * @return $this
      */
     public function skip(\Closure $callback)
     {
         $this->_reject = $callback;
+
         return $this;
     }
 
@@ -519,11 +545,13 @@ class Event extends Component
      * Send the output of the command to a given location.
      *
      * @param string $location
+     *
      * @return $this
      */
     public function sendOutputTo($location)
     {
         $this->_output = $location;
+
         return $this;
     }
 
@@ -531,6 +559,7 @@ class Event extends Component
      * E-mail the results of the scheduled operation.
      *
      * @param array $addresses
+     *
      * @return $this
      *
      * @throws \LogicException
@@ -538,9 +567,10 @@ class Event extends Component
     public function emailOutputTo($addresses)
     {
         if (is_null($this->_output) || $this->_output == $this->getDefaultOutput()) {
-            throw new InvalidCallException("Must direct output to a file in order to e-mail results.");
+            throw new InvalidCallException('Must direct output to a file in order to e-mail results.');
         }
         $addresses = is_array($addresses) ? $addresses : func_get_args();
+
         return $this->then(function (Application $app) use ($addresses) {
             $this->emailOutput($app->mailer, $addresses);
         });
@@ -550,11 +580,13 @@ class Event extends Component
      * Register a callback to be called after the operation.
      *
      * @param \Closure $callback
+     *
      * @return $this
      */
     public function then(\Closure $callback)
     {
         $this->_afterCallbacks[] = $callback;
+
         return $this;
     }
 
@@ -583,6 +615,7 @@ class Event extends Component
         if ($this->_description) {
             return 'Scheduled Job Output (' . $this->_description . ')';
         }
+
         return 'Scheduled Job Output';
     }
 
@@ -590,12 +623,13 @@ class Event extends Component
      * Register a callback to the ping a given URL after the job runs.
      *
      * @param string $url
+     *
      * @return $this
      */
     public function thenPing($url)
     {
         return $this->then(function () use ($url) {
-            (new HttpClient)->get($url);
+            (new HttpClient())->get($url);
         });
     }
 
@@ -603,17 +637,19 @@ class Event extends Component
      * Set the human-friendly description of the event.
      *
      * @param string $description
+     *
      * @return $this
      */
     public function description($description)
     {
         $this->_description = $description;
+
         return $this;
     }
 
     /**
      * Get the Cron description for the event.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -631,6 +667,7 @@ class Event extends Component
         if (is_string($this->_description)) {
             return $this->_description;
         }
+
         return $this->buildCommand();
     }
 
@@ -646,6 +683,7 @@ class Event extends Component
 
     /**
      * Get default output
+     *
      * @return string
      */
     public function getDefaultOutput()
