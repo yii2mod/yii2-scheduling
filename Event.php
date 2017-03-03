@@ -93,6 +93,7 @@ class Event extends Component
     {
         $this->command = $command;
         $this->_output = $this->getDefaultOutput();
+
         parent::__construct($config);
     }
 

@@ -26,11 +26,7 @@ class ScheduleController extends Controller
     public $scheduleFile = '@app/config/schedule.php';
 
     /**
-     * Returns the names of valid options for the action (id)
-     *
-     * @param string $actionID
-     *
-     * @return array
+     * @inheritdoc
      */
     public function options($actionID)
     {
@@ -40,16 +36,17 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Initializes the object.
+     * @inheritdoc
      */
     public function init()
     {
+        parent::init();
+
         if (Yii::$app->has($this->schedule)) {
             $this->schedule = Instance::ensure($this->schedule, Schedule::className());
         } else {
             $this->schedule = Yii::createObject(Schedule::className());
         }
-        parent::init();
     }
 
     /**
