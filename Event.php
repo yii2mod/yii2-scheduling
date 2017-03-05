@@ -17,7 +17,14 @@ use yii\mail\MailerInterface;
  */
 class Event extends Component
 {
+    /**
+     * Event is triggered before running the command.
+     */
     const EVENT_BEFORE_RUN = 'beforeRun';
+
+    /**
+     * Event is triggered after running the command.
+     */
     const EVENT_AFTER_RUN = 'afterRun';
 
     /**
@@ -105,11 +112,13 @@ class Event extends Component
     public function run(Application $app)
     {
         $this->trigger(self::EVENT_BEFORE_RUN);
+
         if (count($this->_afterCallbacks) > 0) {
             $this->runCommandInForeground($app);
         } else {
             $this->runCommandInBackground($app);
         }
+
         $this->trigger(self::EVENT_AFTER_RUN);
     }
 
