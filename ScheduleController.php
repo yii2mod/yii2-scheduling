@@ -43,9 +43,9 @@ class ScheduleController extends Controller
         parent::init();
 
         if (Yii::$app->has($this->schedule)) {
-            $this->schedule = Instance::ensure($this->schedule, Schedule::className());
+            $this->schedule = Instance::ensure($this->schedule, Schedule::class);
         } else {
-            $this->schedule = Yii::createObject(Schedule::className());
+            $this->schedule = Yii::createObject(Schedule::class);
         }
     }
 
