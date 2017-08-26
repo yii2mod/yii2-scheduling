@@ -1,7 +1,12 @@
-Schedule extension for Yii2
-===========================
+<p align="center">
+    <a href="https://github.com/yiisoft" target="_blank">
+        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
+    </a>
+    <h1 align="center">Scheduling extension for Yii 2</h1>
+    <br>
+</p>
 
-Scheduling extension for Yii2 framework
+This extension is the port of Laravel's Schedule component (http://laravel.com/docs/master/artisan#scheduling-artisan-commands)
 
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-scheduling/v/stable)](https://packagist.org/packages/yii2mod/yii2-scheduling)  [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-scheduling/downloads)](https://packagist.org/packages/yii2mod/yii2-scheduling)
 [![License](https://poser.pugx.org/yii2mod/yii2-scheduling/license)](https://packagist.org/packages/yii2mod/yii2-scheduling)
@@ -20,7 +25,7 @@ php composer.phar require yii2mod/yii2-scheduling "*"
 
 or add
 
-```json
+```
 "yii2mod/yii2-scheduling": "*"
 ```
 

@@ -9,8 +9,8 @@
     ],
     "authors": [
         {
-            "name": "Igor Chepurnoy",
-            "email": "igorzfort@gmail.com"
+            "name": "Igor Chepurnoi",
+            "email": "chepurnoi.igor@gmail.com"
         }
     ],
     "require": {
@@ -33,5 +33,11 @@
     },
     "extra": {
         "bootstrap": "yii2mod\\scheduling\\Bootstrap"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
