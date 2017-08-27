@@ -11,6 +11,7 @@ This extension is the port of Laravel's Schedule component (http://laravel.com/d
 [![Latest Stable Version](https://poser.pugx.org/yii2mod/yii2-scheduling/v/stable)](https://packagist.org/packages/yii2mod/yii2-scheduling)  [![Total Downloads](https://poser.pugx.org/yii2mod/yii2-scheduling/downloads)](https://packagist.org/packages/yii2mod/yii2-scheduling)
 [![License](https://poser.pugx.org/yii2mod/yii2-scheduling/license)](https://packagist.org/packages/yii2mod/yii2-scheduling)
 [![Build Status](https://travis-ci.org/yii2mod/yii2-scheduling.svg?branch=master)](https://travis-ci.org/yii2mod/yii2-scheduling)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yii2mod/yii2-scheduling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yii2mod/yii2-scheduling/?branch=master)
 
 Installation
 ------------
