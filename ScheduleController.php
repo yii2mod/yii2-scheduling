@@ -2,6 +2,8 @@
 
 namespace yii2mod\scheduling;
 
+use Carbon\Carbon;
+use Cron\CronExpression;
 use League\CLImate\CLImate;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -82,9 +84,12 @@ class ScheduleController extends Controller
         foreach ($this->schedule->getEvents() as $event) {
             $data[] = [
                 '#' => ++$row,
-                'Task' => $event->getDescription(),
+                'Task' => $event->getSummaryForDisplay(),
                 'Expression' => $event->getExpression(),
-                'Command to Run' => $event->command,
+                'Command to Run' => is_a($event, CallbackEvent::class)
+                    ? $event->getSummaryForDisplay()
+                    : $event->command,
+                'Next run at' => $this->getNextRunDate($event),
             ];
         }
 
@@ -108,5 +113,24 @@ class ScheduleController extends Controller
         call_user_func(function () use ($schedule, $scheduleFile) {
             include $scheduleFile;
         });
+    }
+
+    /**
+     * Get the next scheduled run date for this event
+     *
+     * @param Event $event
+     *
+     * @return string
+     */
+    protected function getNextRunDate(Event $event)
+    {
+        $cron = CronExpression::factory($event->getExpression());
+        $date = Carbon::now();
+
+        if ($event->hasTimezone()) {
+            $date->setTimezone($event->getTimezone());
+        }
+
+        return $cron->getNextRunDate()->format('Y-m-d H:i:s');
     }
 }

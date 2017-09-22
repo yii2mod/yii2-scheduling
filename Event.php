@@ -274,8 +274,8 @@ class Event extends Component
     {
         $segments = explode(':', $time);
 
-        return $this->spliceIntoPosition(2, (int)$segments[0])
-            ->spliceIntoPosition(1, count($segments) == 2 ? (int)$segments[1] : '0');
+        return $this->spliceIntoPosition(2, (int) $segments[0])
+            ->spliceIntoPosition(1, count($segments) == 2 ? (int) $segments[1] : '0');
     }
 
     /**
@@ -507,6 +507,22 @@ class Event extends Component
         $this->_timezone = $timezone;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTimezone()
+    {
+        return $this->_timezone !== null;
+    }
+
+    /**
+     * @return \DateTimeZone|string
+     */
+    public function getTimezone()
+    {
+        return $this->_timezone;
     }
 
     /**
