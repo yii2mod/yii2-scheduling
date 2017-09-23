@@ -19,7 +19,8 @@
         "symfony/process": "~3.2",
         "mtdowling/cron-expression": "~1.0",
         "league/climate": "^3.2",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "nesbot/carbon": "~1.21"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2.0",
