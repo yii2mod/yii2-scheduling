@@ -223,11 +223,9 @@ How to use this extension in your own extension?
 First of all, you should include dependency to the `yii2mod\yii2-scheduling` into your composer.json:
 
 ```
-...
 'require': {
-    "yii2mod/yii2-schedule": "*"
+    "yii2mod/yii2-scheduling": "*"
 }
-...
 ```
 
 Next you should create bootstrapping class for your extension, as described in the http://www.yiiframework.com/doc-2.0/guide-structure-extensions.html#bootstrapping-classes
